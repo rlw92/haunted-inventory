@@ -1,0 +1,7 @@
+rlw92
+rsS8hINGxWvdpsHI
+
+
+mongodb+srv://rlw92:rsS8hINGxWvdpsHI@hicluster.xiq6c4i.mongodb.net/?retryWrites=true&w=majority
+
+node populatedb mongodb+srv://rlw92:rsS8hINGxWvdpsHI@hicluster.xiq6c4i.mongodb.net/?retryWrites=true&w=majority
