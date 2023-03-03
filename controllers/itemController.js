@@ -1,10 +1,28 @@
 const Item = require("../models/item");
+const Itemtype =  require("../models/itemtype");
+
+const async = require("async");
 
 exports.index = (req, res) => {
-  res.send("NOT IMPLEMENTED: Site Home Page");
+  async.parallel(
+    {
+      item_count(callback) {
+        Item.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
+      },
+      item_type_count(callback) {
+        Itemtype.countDocuments({}, callback);
+    },
+  },
+    (err, results) => {
+      res.render("index", {
+        title: "Haunted Inventory Home",
+        error: err,
+        data: results,
+      });
+    }
+  );
 };
-
-// Display list of all books.
+// Display list of all items.
 exports.item_list = (req, res) => {
   res.send("NOT IMPLEMENTED: Item list");
 };
