@@ -2,7 +2,8 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #[em Haunted Inventory], a very basic Express website developed as a tutorial example on the Mozilla Developer Network.
+  p Welcome to #[em Haunted Inventory], a site created as a project for learning NodeJs.
+  p A place where users can leave stories about strange objects they have encountered.
 
   h1 Dynamic content
 
@@ -14,3 +15,4 @@ block content
     ul
       li #[strong Items:] !{data.item_count}
       li #[strong Item types:] !{data.item_type_count}
+    a(href='/catalog/items') ItemList

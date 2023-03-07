@@ -1,4 +1,5 @@
 const Itemtype = require("../models/itemtype");
+const async = require("async");
 
 // Display list of all Genre.
 exports.itemtype_list = (req, res) => {

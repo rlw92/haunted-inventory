@@ -11,7 +11,7 @@ const ItemSchema = new Schema({
 
 
 
-// Virtual for author's URL
+// Virtual for item's URL
 ItemSchema.virtual("url").get(function () {
   // We don't use an arrow function as we'll need the this object
   return `/catalog/item/${this._id}`;
