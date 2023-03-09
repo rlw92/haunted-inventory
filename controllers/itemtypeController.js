@@ -1,4 +1,5 @@
 const Itemtype = require("../models/itemtype");
+const Item = require("../models/item");
 const async = require("async");
 
 // Display list of all Genre.
@@ -8,7 +9,34 @@ exports.itemtype_list = (req, res) => {
 
 // Display detail page for a specific Genre.
 exports.itemtype_detail = (req, res) => {
-  res.send(`NOT IMPLEMENTED: Item type detail: ${req.params.id}`);
+  async.parallel(
+    {
+      itemtype(callback) {
+        Itemtype.findById(req.params.id).exec(callback);
+      },
+
+      itemtype_items(callback) {
+        Item.find({ item_type: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.itemtype == null) {
+        // No results.
+        const err = new Error("Type not found");
+        err.status = 404;
+        return next(err);
+      }
+      // Successful, so render
+      res.render("itemtype_detail", {
+        title: "Type Detail",
+        type: results.itemtype,
+        type_items: results.itemtype_items,
+      });
+    }
+  );
 };
 
 // Display Genre create form on GET.
