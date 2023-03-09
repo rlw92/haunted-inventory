@@ -42,7 +42,9 @@ exports.item_detail = (req, res) => {
   async.parallel(
    {
      item(callback) {
-       Item.findById(req.params.id).exec(callback);
+       Item.findById(req.params.id)
+       .populate("item_type")
+       .exec(callback);
      },
      item_type(callback) {
         Itemtype.find({ item: req.params.id }).exec(callback);
@@ -61,7 +63,7 @@ exports.item_detail = (req, res) => {
      // Successful, so render.
      res.render("item_detail", {
          item: results.item,
-         item_type: results.item_type,
+         type: results.item_type,
               });
 
    }

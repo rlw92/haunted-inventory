@@ -3,4 +3,8 @@ extends layout
 block content
   h1  #{item.item_name}
   h3 #{item.item_about}
-  h1 type #{item_type}
+  p #[strong Item type: ]
+    each val, index in item.item_type
+      a(href=val.url) #{val.name}
+      if index < item.item_type.length - 1
+        |,
