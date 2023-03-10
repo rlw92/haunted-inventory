@@ -9,12 +9,10 @@ block content
     h4 Items
 
     dl
-      each book in type_items
+      each item in type_items
         dt
-          a(href=book.url) #{book.name}
-        dd #{book.summary}
+          a(href=item.url) #{item.item_name}
+        dd #{item.item_about}
 
       else
         p This genre has no books
-
-    p #{type_items}
