@@ -7,8 +7,11 @@ block content
     each item in item_list
       li
        a(href=item.url) #{item.name}
-      
+
 
 
     else
-      li There are no books.
+      li There are no Items.
+
+    div
+      a(href='/catalog/itemtype/create') Create Type

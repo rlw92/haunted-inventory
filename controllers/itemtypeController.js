@@ -104,12 +104,68 @@ exports.itemtype_create_post = [
 
 // Display Genre delete form on GET.
 exports.itemtype_delete_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Item type delete GET");
+  async.parallel(
+   {
+     type(callback) {
+       Itemtype.findById(req.params.id).exec(callback);
+     },
+     type_items(callback) {
+       Item.find({ item_type: req.params.id }).exec(callback);
+     },
+   },
+   (err, results) => {
+     if (err) {
+       return next(err);
+     }
+     if (results.type == null) {
+       // No results.
+       res.redirect("/catalog/authors");
+     }
+     // Successful, so render.
+     res.render("type_delete", {
+       title: "Delete Type",
+       type: results.type,
+       type_items: results.type_items,
+     });
+   }
+ );
 };
 
 // Handle Genre delete on POST.
 exports.itemtype_delete_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: Item type delete POST");
+  async.parallel(
+   {
+     type(callback) {
+       Itemtype.findById(req.body.authorid).exec(callback);
+     },
+     type_items(callback) {
+       Item.find({ item_type: req.body.authorid }).exec(callback);
+     },
+   },
+   (err, results) => {
+     if (err) {
+       return next(err);
+     }
+     // Success
+     if (results.type_items.length > 0) {
+       // Author has books. Render in same way as for GET route.
+       res.render("type_delete", {
+         title: "Delete Type",
+         type: results.type,
+         type_items: results.type_items,
+       });
+       return;
+     }
+     // Author has no books. Delete object and redirect to the list of authors.
+     Itemtype.findByIdAndRemove(req.body.authorid, (err) => {
+       if (err) {
+         return next(err);
+       }
+       // Success - go to author list
+       res.redirect("/catalog/itemtypes");
+     });
+   }
+ );
 };
 
 // Display Genre update form on GET.

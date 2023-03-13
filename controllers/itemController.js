@@ -169,13 +169,42 @@ exports.item_create_post = [
 
 // Display book delete form on GET.
 exports.item_delete_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Item delete GET");
+  async.parallel(
+   {
+     item(callback) {
+       Item.findById(req.params.id).exec(callback);
+     },
+
+   },
+   (err, results) => {
+     if (err) {
+       return next(err);
+     }
+     if (results.item == null) {
+       // No results.
+       res.redirect("/catalog/items");
+     }
+     // Successful, so render.
+     res.render("item_delete", {
+       title: "Delete item",
+       item: results.item,
+
+     });
+   }
+ );
 };
 
 // Handle book delete on POST.
 exports.item_delete_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: Item delete POST");
-};
+        // Author has no books. Delete object and redirect to the list of authors.
+      Item.findByIdAndRemove(req.body.itemid, (err) => {
+        if (err) {
+          return next(err);
+        }
+        // Success - go to items list
+        res.redirect("/catalog/items");
+      });
+    };
 
 // Display book update form on GET.
 exports.item_update_get = (req, res) => {
