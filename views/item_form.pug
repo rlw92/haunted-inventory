@@ -6,10 +6,10 @@ block content
   form(method='POST' action='')
     div.form-group
       label(for='title') Title:
-      input#title.form-control(type='text', placeholder='Name of Item' name='title' required='true' value=(undefined===book ? '' : book.title) )
+      input#title.form-control(type='text', placeholder='Name of Item' name='title' required='true' value=(undefined===book ? '' : book.item_name) )
       div.form-group
         label(for='summary') Item Story:
-        textarea#summary.form-control(type='textarea', placeholder='Summary' name='summary' required='true') #{undefined===book ? '' : book.summary}
+        textarea#summary.form-control(type='textarea', placeholder='Summary' name='summary' required='true') #{undefined===book ? '' : book.item_about}
     div.form-group
       label Item Type:
       div

@@ -170,10 +170,62 @@ exports.itemtype_delete_post = (req, res) => {
 
 // Display Genre update form on GET.
 exports.itemtype_update_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Item type update GET");
+  Itemtype.findById(req.params.id, function (err, genre) {
+    if (err) {
+      return next(err);
+    }
+    if (genre == null) {
+      // No results.
+      var err = new Error("Type not found");
+      err.status = 404;
+      return next(err);
+    }
+    // Success.
+    res.render("type_form", { title: "Update Type", genre: genre });
+  });
 };
 
 // Handle Genre update on POST.
-exports.itemtype_update_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: Item type update POST");
-};
+exports.itemtype_update_post = [
+  // Validate and sanitze the name field.
+  body("name", "Genre name must contain at least 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  // Process request after validation and sanitization.
+  (req, res, next) => {
+    // Extract the validation errors from a request .
+    const errors = validationResult(req);
+
+    // Create a genre object with escaped and trimmed data (and the old id!)
+    var genre = new Itemtype({
+      name: req.body.name,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      // There are errors. Render the form again with sanitized values and error messages.
+      res.render("type_form", {
+        title: "Update type",
+        genre: genre,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid. Update the record.
+      Itemtype.findByIdAndUpdate(
+        req.params.id,
+        genre,
+        {},
+        function (err, thegenre) {
+          if (err) {
+            return next(err);
+          }
+          // Successful - redirect to genre detail page.
+          res.redirect(thegenre.url);
+        }
+      );
+    }
+  },
+];
