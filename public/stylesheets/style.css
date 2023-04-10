@@ -1,6 +1,11 @@
+@font-face { font-family: JuneBug; src: url('Haunted.ttf'); }
+
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 20px JuneBug, Helvetica, Arial, sans-serif;
+  background-color:black;
+  color:white;
+
 
 }
 
@@ -13,6 +18,10 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
 
   }
+
+  h1{text-align:center}
+
+  .header{color:green}

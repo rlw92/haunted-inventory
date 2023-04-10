@@ -20,5 +20,17 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "description": "INVENTORY APPLICATION - Odin Project",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlw92/haunted-inventory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rlw92/haunted-inventory/issues"
+  },
+  "homepage": "https://github.com/rlw92/haunted-inventory#readme"
 }
