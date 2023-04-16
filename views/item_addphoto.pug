@@ -1,0 +1,14 @@
+extends layout
+
+block content
+
+
+
+  div
+   h1 Add photo to #{item.item_name}
+   h2 ID:#{item._id}
+  div
+   form(action="", enctype="multipart/form-data", method="POST")
+    input(id="image" type="file" name="avatar")
+    input(type="hidden", name="id", required="true", value=item._id)
+    button(type="submit") Submit

@@ -8,8 +8,10 @@ block content
       a(href=val.url) #{val.name}
       if index < item.item_type.length - 1
         |,
-
+  
   div
    a(href=item.url+"/delete") Delete Item
   div
    a(href=item.url+"/update") Update Item
+  div
+   a(href=item.url+"/uploadfile") Add Photo

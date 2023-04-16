@@ -6,6 +6,7 @@ const ItemSchema = new Schema({
   item_name: { type: String, required: true, maxLength: 30 },
   item_about: { type: String, required: true, maxLength: 10000 },
   item_type: [{ type: Schema.Types.ObjectId, ref: "Itemtype"}],
+  item_image: {type: String}
 
 });
 

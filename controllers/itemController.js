@@ -1,6 +1,9 @@
 const Item = require("../models/item");
 const Itemtype =  require("../models/itemtype");
 const { body, validationResult } = require("express-validator");
+const asyncHandler = require('express-async-handler');
+var multer  = require('multer');
+var upload = multer({ dest: 'public/uploads/' });
 
 
 const async = require("async");
@@ -334,3 +337,34 @@ exports.item_update_post = [
     });
   },
 ];
+
+//trying to get image uploading
+exports.item_uploadimg_get = asyncHandler(async (req, res, next) => {
+  // Get details of genre and all associated books (in parallel)
+  const [item] = await Promise.all([
+    Item.findById(req.params.id).exec()
+  ]);
+  if (item === null) {
+    // No results.
+    const err = new Error("Item not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("item_addphoto", {
+    title: "Item Detail",
+    item: item
+    });
+});
+
+//NEED CHanging:::sssss
+
+exports.item_uploadimg_post = [
+  upload.single('avatar'),
+  function(req, res, next) {
+  Item.findByIdAndUpdate(req.params.id, {item_image: req.file.filename}, {}, function(err,veg) {
+    if (err) {return next(err);}
+    // res.redirect('/veg/' + req.body.name);
+    res.render('item_addedphoto', {title: 'Added photo to ', file: req.file, item: veg, idd: req.body.vegid});
+  });
+}];

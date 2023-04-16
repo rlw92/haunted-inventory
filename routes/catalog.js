@@ -9,6 +9,10 @@ const itemtype_controller = require("../controllers/itemtypeController");
 
 router.get("/", item_controller.index);
 
+//Trying to get image upload to work
+router.get("/item/:id/uploadfile", item_controller.item_uploadimg_get)
+router.post("/item/:id/uploadfile", item_controller.item_uploadimg_post)
+
 // GET request for creating a item. NOTE This must come before routes that display item (uses id).
 router.get("/item/create", item_controller.item_create_get);
 
