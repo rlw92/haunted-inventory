@@ -4,5 +4,5 @@ block content
 
 
  div
-  h2 Thank you for uploading this beautiful image to #{item.item_name}
-  img(src="/uploads/#{file.filename}")
+  h2 Thank you for uploading this beautiful image for #{item.item_name}
+  img.itemImg(src="/uploads/" + file.filename)
