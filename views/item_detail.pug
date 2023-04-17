@@ -8,8 +8,9 @@ block content
       a(href=val.url) #{val.name}
       if index < item.item_type.length - 1
         |,
-  div
-   img.itemImg(src="/uploads/" + item.item_image)
+  if item.item_image
+   div
+    img.itemImg(src="/uploads/" + item.item_image)
   div
    a(href=item.url+"/delete") Delete Item
   div
